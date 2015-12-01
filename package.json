@@ -1,0 +1,67 @@
+{
+  "name": "product-filters",
+  "author": "John Entwistle <j.entwistle76@glink.drexel.edu>",
+  "description": "",
+  "version": "1.0.0",
+  "browserify": {
+    "transform": [
+      "babelify",
+      "envify",
+      "browserify-shim",
+      "reactify"
+    ]
+  },
+  "mundler": {
+    "options": {
+      "concat": true,
+      "preTasks": "npm run eslint:modified -s"
+    },
+    "bundles": {
+      "product_filter": {
+        "cwd": "src/js/product_filter",
+        "src": "**/*.js",
+        "dest": "dist/js/product_filter.js"
+      }
+    }
+  },
+  "config": {
+    "environment": "development"
+  },
+  "devDependencies": {
+    'babel': '^5.4.7',
+    'babelify': '^6.1.2',
+    'browserify-shim': '^3.8.10',
+    'envify': '^3.2.0',
+    'eslint': '^1.6.0',
+    'gmsmith': '^0.5.0',
+    "bluebird": "^3.0.5",
+    "browsernizr": "^1.0.2",
+    "classnames": "^2.2.0",
+    "flux": "^2.1.1",
+    "keymirror": "^0.1.1",
+    "object-assign": "^4.0.1",
+    "qs": "^6.0.1",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "reactify": "^1.1.1",
+    "superagent": "^1.4.0",
+    'concurrently': '^0.1.1',
+    'mundler': '^1.4.1',
+    'rimraf': '^2.2.8',
+    'uglify-js': '^2.4.16'
+  },
+  "scripts": {
+    "postinstall": "yo estrn:globalDeps; find node_modules/ -name '*.info' -type f -delete",
+    "clean:js": "rimraf dist/js/*",
+    "clean:css": "rimraf dist/css/*",
+    "eslint": "export FORCE_COLOR=1; find src/js/app -type f -regex '.*[js|jsx]$' | xargs eslint",
+    "eslint:modified": "export FORCE_COLOR=1; if [ ${MUNDLER_MODIFIED_FILE} = undefined ]; then find src/js/app -type f -regex '.*[js|jsx]$' | xargs eslint; else eslint $MUNDLER_MODIFIED_FILE; fi;",
+    "prebuild:scripts": "npm run eslint && npm run clean:js",
+    "build:scripts": "NODE_ENV=$npm_package_config_environment mundler",
+    "postbuild:scripts": "npm run uglify",
+    "watch": "concurrent -r -k 'npm run watch:scripts -s'",
+    "watch:scripts": "NODE_ENV=$npm_package_config_environment mundler -w",
+    "dev": "npm run watch -s",
+    "prod": "npm run build:scripts --product-filters:environment=production"
+  }
+}
