@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var FilterStore = require('../stores/FilterStore');
 var ProductStore = require('../stores/ProductStore');
 var ProductItem = require('./ProductItem');
@@ -30,7 +31,14 @@ var Products = React.createClass({
     });
     return (
       <div className={'products-list'}>
-        {productItems}
+        <ReactCSSTransitionGroup
+          transitionName="product-item"
+          transitionAppear={true}
+          transitionAppearTimeout={400}
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={300}>
+            {productItems}
+        </ReactCSSTransitionGroup>
       </div>
     );
   },
