@@ -7,11 +7,10 @@ var Filters = require('./components/Filters');
 var Products = require('./components/Products');
 var React = require('react');
 var ReactDOM = require('react-dom');
-//window.React = React; // debug
 
 var filters = Object.keys(FilterStore.state).map(function(filterType) {
   return (
-    <Filters filterType={filterType} multi={FilterStore.state[filterType].opts.multi} />
+    <Filters key={filterType} filterType={filterType} multi={FilterStore.state[filterType].opts.multi} />
   );
 });
 
